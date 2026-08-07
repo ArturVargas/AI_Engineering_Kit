@@ -1,0 +1,18 @@
+version: product-development-v1
+
+stages:
+  - discovery
+  - idea-validation
+  - specification
+  - architecture
+  - implementation
+  - verification
+  - release
+  - observability
+  - early-user-feedback
+  - product-learning
+
+rules:
+  - Las etapas son opcionales; cada iniciativa empieza donde corresponde.
+  - Los cambios arquitecturales requieren ADR.
+  - Las salidas de una etapa son editables antes de continuar.

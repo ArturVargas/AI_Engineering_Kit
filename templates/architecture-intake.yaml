@@ -1,0 +1,21 @@
+project:
+  name: ""
+  summary: ""
+  objective: ""
+
+requirements:
+  functional: []
+  non_functional: []
+
+constraints:
+  technical: []
+  business: []
+  operational: []
+
+source_of_truth:
+  system_of_record: ""
+  audit_source: ""
+
+options: []
+risks: []
+open_questions: []
