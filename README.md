@@ -58,13 +58,14 @@ En esos casos puede convenir código de orquestación, un sistema de colas, CI/C
 5. **Separar lo estable de lo temporal.** Los estándares globales no se mezclan con el contexto específico ni con los resultados de una iniciativa.
 6. **Evidencia sobre opinión.** Una decisión de producto, arquitectura o release debe enlazar su evidencia.
 
-## Flujo v1
+## Flujo v1.1
 
 ```text
 discovery
   → idea-validation
   → specification
   → architecture
+  → implementation-plan
   → implementation
   → verification
   → release
@@ -83,6 +84,12 @@ No es una cadena obligatoria. Cada iniciativa entra por la primera etapa que nec
 | Bug o regresión | `verification` |
 | Incidente en producción | `observability` o `product-learning` |
 | Proyecto existente | `baseline`, luego la etapa actual |
+
+Antes de implementar, clasifica la iniciativa:
+
+- **`spike`:** responde una duda de viabilidad; no convierte código exploratorio en producción.
+- **`bounded`:** modifica un flujo existente y localizado; requiere diseño breve y verificación proporcional.
+- **`architectural`:** altera componentes, datos, integraciones o contratos; requiere especificación, alternativas y plan técnico.
 
 La diferencia entre las fases finales importa:
 
@@ -142,6 +149,28 @@ No reconstruyas el historial ni fuerces el proyecto a recorrer todas las etapas.
 | `.ai/runs/` | Inputs, evidencia y resultados de una iniciativa. |
 
 No copies credenciales, tokens, PII ni datos sensibles a estos artefactos. Usa enlaces, identificadores o resúmenes seguros cuando necesites referenciarlos.
+
+## Uso junto a Superpowers
+
+El kit y Superpowers se complementan, pero no son lo mismo:
+
+| Responsabilidad | AI Engineering Kit | Superpowers |
+| --- | --- | --- |
+| Contexto de producto, arquitectura y decisiones | Guarda referencias, ADRs y evidencia persistente. | Lee ese contexto para trabajar. |
+| Especificación y planificación | Aporta plantillas que viajan con el proyecto. | Guía el refinamiento, aprobación y descomposición en tareas. |
+| Implementación | Conserva el plan y los resultados del run. | Aplica TDD, ejecución disciplinada y revisión según riesgo. |
+| Debugging y release | Registra causa raíz y evidencia de salida. | Investiga causa raíz y exige verificación fresca antes de declarar éxito. |
+
+Superpowers no debe copiarse dentro de este repositorio: se instala en el agente. Este kit guarda los artefactos que permiten reutilizar su disciplina entre sesiones y proyectos.
+
+Para una iniciativa de riesgo medio o alto, usa estas plantillas junto con los skills de Superpowers:
+
+1. `templates/specification.md` para definir alcance, criterios y comportamiento ante errores.
+2. `templates/implementation-plan.md` para fijar archivos, interfaces, pruebas y rollback.
+3. `templates/verification.md` para registrar la evidencia fresca antes de un release.
+4. `templates/incident-root-cause.md` cuando haya un fallo que requiera investigación antes de corregirlo.
+
+Los estándares `standards/execution.md` y `standards/release-readiness.md` indican cuándo cada práctica es proporcional al riesgo. No conviertas cambios triviales en un proceso arquitectural.
 
 ## Evolución del kit
 
