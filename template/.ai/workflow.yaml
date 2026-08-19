@@ -1,10 +1,11 @@
-version: product-development-v1
+version: product-development-v1.1
 
 stages:
   - discovery
   - idea-validation
   - specification
   - architecture
+  - implementation-plan
   - implementation
   - verification
   - release
@@ -16,3 +17,5 @@ rules:
   - Las etapas son opcionales; cada iniciativa empieza donde corresponde.
   - Los cambios arquitecturales requieren ADR.
   - Las salidas de una etapa son editables antes de continuar.
+  - Clasifica cada iniciativa como spike, bounded o architectural antes de implementar.
+  - La complejidad descubierta puede elevar la clasificación, nunca reducirla silenciosamente.
