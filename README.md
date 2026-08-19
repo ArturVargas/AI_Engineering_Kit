@@ -58,7 +58,7 @@ En esos casos puede convenir código de orquestación, un sistema de colas, CI/C
 5. **Separar lo estable de lo temporal.** Los estándares globales no se mezclan con el contexto específico ni con los resultados de una iniciativa.
 6. **Evidencia sobre opinión.** Una decisión de producto, arquitectura o release debe enlazar su evidencia.
 
-## Flujo v1.1
+## Flujo v1.2 Lite
 
 ```text
 discovery
@@ -171,6 +171,38 @@ Para una iniciativa de riesgo medio o alto, usa estas plantillas junto con los s
 4. `templates/incident-root-cause.md` cuando haya un fallo que requiera investigación antes de corregirlo.
 
 Los estándares `standards/execution.md` y `standards/release-readiness.md` indican cuándo cada práctica es proporcional al riesgo. No conviertas cambios triviales en un proceso arquitectural.
+
+## Capa opcional de Design & UX
+
+La v1.2 Lite mejora el trabajo con interfaces sin imponer una estética ni una etapa adicional a todas las iniciativas. Evita que una petición como “hazlo más premium” cambie silenciosamente el producto, el journey y la implementación a la vez.
+
+Cuando hay UI, la responsabilidad se separa así:
+
+```text
+Producto / estrategia → UX → dirección visual → implementación → verificación
+```
+
+Producto conserva problema, ICP, propuesta de valor y objetivo de negocio. El brief de diseño consume esas decisiones; no vuelve a hacer discovery desde cero. UX define journey, jerarquía, acciones y estados. La dirección visual sólo define cómo expresar esa experiencia y no reemplaza un sistema de diseño existente.
+
+| Tipo de trabajo | Capa de Design & UX |
+| --- | --- |
+| Backend, API, datos, infraestructura o cambio sin UI | No aplica. |
+| Ajuste localizado de UI existente | Sección de calidad de diseño en `verification.md`. |
+| Nueva pantalla, flujo o cambio visual material | `design-brief.md` + verificación proporcional. |
+| Landing, rediseño o identidad visual nueva | `design-brief.md`, `reference-pack.md` si aporta valor y verificación proporcional. |
+
+Los artefactos son:
+
+- `standards/design-quality.md`: mínimos de responsive, accesibilidad, estados, rendimiento, veracidad y originalidad; no define estilo.
+- `templates/design-brief.md`: requisitos UX y una sección opcional de dirección visual.
+- `templates/reference-pack.md`: referencias, patrones que aprender, elementos a no copiar y consideraciones de licencia/originalidad.
+- `templates/verification.md`: evidencia UI cuando aplica, sin crear un segundo proceso de verificación.
+
+Si UX o implementación necesitan cambiar una decisión ya aprobada de producto, arquitectura o especificación, documenta el cambio upstream dentro del artefacto afectado y pide aprobación. No reconstruyas silenciosamente una interfaz por una petición local.
+
+### Qué no incluye todavía
+
+La v1.2 Lite no incluye presets de diseño, galerías de assets, scripts de screenshots/Lighthouse, automatización de auditorías ni skills externas copiadas. Se evaluarán sólo cuando varios proyectos reales demuestren que un patrón se repite y compensa su mantenimiento.
 
 ## Evolución del kit
 

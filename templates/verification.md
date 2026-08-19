@@ -14,6 +14,20 @@
 | --- | --- | --- |
 |  |  |  |
 
+## Calidad de diseño (si aplica)
+
+| Comprobación | Resultado | Evidencia / viewport / herramienta |
+| --- | --- | --- |
+| Jerarquía y contenido realista |  |  |
+| Desktop, tablet o mobile relevantes |  |  |
+| Estados loading, empty, error, success y disabled pertinentes |  |  |
+| Navegación por teclado, foco, semántica y contraste |  |  |
+| `prefers-reduced-motion`, interacción y feedback |  |  |
+| Overflow, imágenes, fuentes y rendimiento |  |  |
+| Claims, assets y originalidad |  |  |
+
+Si una comprobación no aplica, indica el motivo. Para cambios pequeños, documenta sólo los checks afectados; para flujos o landings nuevos, conserva capturas o resultados de herramientas cuando aporten evidencia.
+
 ## Release y operación
 
 - Build / lint / type-check:
