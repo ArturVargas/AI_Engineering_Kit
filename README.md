@@ -207,3 +207,15 @@ La v1.2 Lite no incluye presets de diseño, galerías de assets, scripts de scre
 ## Evolución del kit
 
 Versiona los cambios al kit global. Si ves que los equipos corrigen el mismo tipo de salida una y otra vez, mejora el estándar o la plantilla que la originó. No hace falta actualizar todos los proyectos de inmediato: cada proyecto puede adoptar una versión nueva del flujo cuando tenga sentido.
+
+## Cookbooks opcionales
+
+Un Cookbook es una política reutilizable para un caso que ya se repite entre
+proyectos, pero que todavía no justifica un servicio o framework. Su formato
+canónico es YAML: puede revisarse en un pull request, ejecutarse manualmente y,
+si la evidencia lo amerita, consumirse más tarde desde un adaptador local.
+
+El primer ejemplo es [`cookbooks/hybrid-routing-pilot.yaml`](cookbooks/hybrid-routing-pilot.yaml).
+Define un experimento de routing de modelos con estado compacto, evidencia y
+escalación explícita. No es necesario para iniciativas normales y no sustituye
+los artefactos de producto, arquitectura o verificación del flujo principal.
