@@ -1,0 +1,178 @@
+# Cookbook: Hybrid Routing Pilot
+#
+# Source of truth for a reusable, evidence-driven model-routing workflow.
+# It defines orchestration state and decision gates; it does not expose,
+# persist, or reconstruct model hidden states or chain-of-thought.
+
+metadata:
+  id: hybrid-routing-pilot
+  version: 0.1.0
+  status: proposed
+  owner: engineering
+  format: yaml
+
+purpose:
+  problem: >-
+    Route bounded work to an economical profile only when its acceptance
+    evidence supports that choice, while preserving a stronger profile for
+    architectural and uncertain work.
+  outcome: >-
+    Reduce attributable model cost without silently lowering quality,
+    observability, or the ability to escalate.
+
+principles:
+  - Treat compact operational state as a safe interface between phases.
+  - Store decisions, evidence, identifiers, and counters; never prompts, code,
+    secrets, PII, chain-of-thought, or raw tool output.
+  - Make routing deterministic from declared policy and evidence.
+  - Escalate explicitly when uncertainty, scope, or evidence requires it.
+  - Keep the cookbook usable without a runtime library.
+
+profiles:
+  strong:
+    use_for:
+      - architecture
+      - ambiguous requirements
+      - cross-cutting changes
+      - security-sensitive work
+      - escalation
+  economical:
+    use_for:
+      - bounded UI work
+      - localized implementation
+    never_use_for:
+      - unresolved architecture
+      - missing acceptance criteria
+      - unreviewed security-sensitive work
+
+working_state_contract:
+  required_fields:
+    - run_id
+    - workflow_version
+    - current_stage
+    - current_profile
+    - task_class
+    - allowed_actions
+    - acceptance_ids
+    - evidence_refs
+    - escalation_count
+    - retry_count
+    - stop_reason
+  constraints:
+    max_escalations_per_flow: 1
+    automatic_retries: 0
+    persistence: per_run
+    prohibited_content:
+      - prompts
+      - source_code
+      - secrets
+      - pii
+      - chain_of_thought
+      - raw_tool_output
+
+evidence_contract:
+  minimum_for_completion:
+    - acceptance criteria have a pass or fail result
+    - verification evidence is linked by stable reference
+    - final status and stop reason are recorded
+  completion_states:
+    - complete
+    - stopped
+  escalation_triggers:
+    - acceptance criteria are ambiguous or missing
+    - requested work exceeds bounded scope
+    - verification fails or is inconclusive
+    - security, architectural, or product risk appears
+  stop_triggers:
+    - quota or tool failure prevents trustworthy evidence
+    - the outcome of a turn is uncertain or a duplicate may occur
+
+state_machine:
+  initial: intake
+  states:
+    intake:
+      action: classify task and load only relevant context
+      next:
+        classified: task classification and acceptance criteria are available
+        stopped: required context is unavailable
+    classified:
+      action: select a profile from policy and create compact working state
+      next:
+        running: selected profile is allowed for the task class
+        escalate_pending: policy or risk requires the strong profile
+    running:
+      action: perform the bounded phase and collect declared evidence
+      next:
+        evidence_collected: phase ends with evidence references
+        escalate_pending: an escalation trigger occurs
+        stopped: a non-recoverable tool, quota, or policy failure occurs
+    evidence_collected:
+      action: evaluate acceptance evidence without automatic retry
+      next:
+        complete: all declared completion evidence is present and accepted
+        escalate_pending: evidence is failed or inconclusive and escalation remains
+        stopped: evidence is failed or inconclusive and escalation is exhausted
+    escalate_pending:
+      action: record reason, switch once to the strong profile, and continue
+      next:
+        running: escalation budget remains
+        stopped: escalation budget is exhausted
+    complete:
+      terminal: true
+    stopped:
+      terminal: true
+
+pilot:
+  target_project: CodexRouter
+  objective: >-
+    Compare a strong-profile baseline with a policy that permits an economical
+    profile only for a bounded implementation phase.
+  scope:
+    flows: 4
+    total_turns: 8
+    baseline_flows: 2
+    candidate_flows: 2
+    turns_per_flow: 2
+    maximum_escalations_per_flow: 1
+    automatic_retries: 0
+  control:
+    baseline_profile: strong
+    candidate_policy:
+      architecture: strong
+      bounded_ui_implementation: economical
+      escalation: strong
+  success_criteria:
+    - At least 5 percent fewer attributable tokens across an accepted complete flow.
+    - No accepted-flow quality loss against the same acceptance criteria.
+    - Every routing and escalation decision has an evidence reference.
+  stop_conditions:
+    - quota or tool failure that makes measurement unreliable
+    - missing acceptance evidence
+    - an unapproved policy exception
+    - completion of the declared flow and turn budget
+    - a further turn would exceed the declared budget
+
+adoption:
+  phase_a:
+    name: cookbook only
+    deliverable: YAML policy, compact-state example, and evidence references in the project.
+    runtime: none
+  phase_b:
+    name: simulation
+    deliverable: deterministic transition tests with no model calls.
+    runtime: optional local adapter
+  phase_c:
+    name: measured pilot
+    deliverable: baseline/candidate comparison using the pilot budget.
+    runtime: optional local adapter
+  phase_d:
+    name: extraction
+    condition: more than one project repeats the same transition and evidence needs.
+    deliverable: small reusable local library, not a centralized service.
+
+non_goals:
+  - train or modify a model
+  - access hidden model states
+  - build a general-purpose agent framework
+  - automatically retry, self-heal, or override human approval
+  - centralize project-specific routing before repeated evidence justifies it
