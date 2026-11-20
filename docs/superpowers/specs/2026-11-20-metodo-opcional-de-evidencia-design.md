@@ -1,6 +1,6 @@
 # Método opcional de evidencia por iniciativa
 
-Estado: diseño para revisión. Inspiración: [ghosty-dev](https://github.com/blissito/ghosty-dev). No requiere instalarlo.
+Estado: diseño aprobado. Inspiración: [ghosty-dev](https://github.com/blissito/ghosty-dev). No requiere instalarlo.
 
 ## Decisión de adopción
 

@@ -4,6 +4,12 @@
 
 ## Objetivo
 
+## Elección por iniciativa
+
+Método de evidencia: pendiente
+
+Al abrir este plan tras aprobar las decisiones, ofrece una vez: «Podemos vincular las pruebas a la versión del cambio y, si el riesgo lo exige, hacer una revisión independiente. Cuesta tiempo adicional de verificación. ¿Quieres adoptarlo para esta iniciativa?». En proyectos en marcha, hazlo antes de la siguiente tarea. Sustituye «pendiente» por «adoptado» o «declinado» según la respuesta; el silencio no activa nada. No vuelvas a preguntar al reabrir el plan. Declinar mantiene los controles normales.
+
 ## Referencias
 
 - Especificación:
