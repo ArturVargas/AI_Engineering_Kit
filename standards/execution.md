@@ -28,6 +28,8 @@ Clasifica cada iniciativa antes de cambiar código. Si aparece complejidad nueva
 
 ## Pruebas y revisión según riesgo
 
+Al preparar el plan, ofrece el [método de evidencia por iniciativa](../docs/guias/metodo-de-evidencia.md). Complementa estos mínimos; no los reemplaza. Si se adopta, el responsable enlaza un solo registro persistente por tarea (issue, ticket o run) y espera la notificación del CI cuando exista, sin consultas repetidas del agente.
+
 - Aplica TDD a reglas de negocio, cálculos, autorización, APIs, transformaciones de datos y bugs reproducibles.
 - Para copy, configuración o cambios visuales simples, usa la verificación proporcional: build, prueba manual o E2E cuando aplique.
 - No uses pruebas artificiales solo para cumplir un ritual.

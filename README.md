@@ -210,6 +210,8 @@ Versiona los cambios al kit global. Si ves que los equipos corrigen el mismo tip
 
 ## Cookbooks opcionales
 
+Al pasar de decisiones a implementación puedes adoptar el [método opcional de evidencia](docs/guias/metodo-de-evidencia.md): permite ver qué defecto detectaría una prueba y qué versión revisó otra persona o agente. Funciona a mano, sin instalar Ghosty, CLI ni Actions.
+
 Un Cookbook es una política reutilizable para un caso que ya se repite entre
 proyectos, pero que todavía no justifica un servicio o framework. Su formato
 canónico es YAML: puede revisarse en un pull request, ejecutarse manualmente y,
